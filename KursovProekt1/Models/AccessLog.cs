@@ -39,6 +39,6 @@ namespace KursovProekt1.Models
 
         // Бележки
         [StringLength(500)]
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
     }
 }
