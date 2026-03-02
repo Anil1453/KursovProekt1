@@ -1,0 +1,48 @@
+﻿@model IEnumerable<KursovProekt1.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "Потребители";
+}
+
+<h1>Потребители</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Имейл</th>
+            <th>Текуща роля</th>
+            <th>Промени роля</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            var currentRole = ViewBag.UserRoles[user.Id];
+            <tr>
+                <td>@user.Email</td>
+                <td>@currentRole</td>
+                <td>
+                    <form method="post" asp-action="ChangeRole">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <select name="newRole" class="form-control" style="display:inline; width:auto">
+                            <option value="Потребител" selected="@(currentRole == "Потребител")">Потребител</option>
+                            <option value="Служител" selected="@(currentRole == "Служител")">Служител</option>
+                            <option value="Мениджър" selected="@(currentRole == "Мениджър")">Мениджър</option>
+                            <option value="Admin" selected="@(currentRole == "Admin")">Admin</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Запази</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

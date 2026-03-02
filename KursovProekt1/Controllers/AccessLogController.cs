@@ -16,41 +16,23 @@ namespace KursovProekt1.Controllers
             _context = context;
         }
 
-        // Lista sa logove
-        public IActionResult Index()
+        // Показва логовете, може да се филтрира по статус
+        public IActionResult Index(string status)
         {
             var logs = _context.AccessLogs
                 .Include(a => a.User)
                 .Include(a => a.Room)
-                .ToList();
+                .AsQueryable();
 
-            return View(logs);
-        }
-
-        // Forma za dobavqne
-        public IActionResult Create()
-        {
-            ViewBag.Rooms = _context.Rooms.ToList();
-            ViewBag.Users = _context.Users.ToList();
-            return View();
-        }
-
-        // Dobavqne na log
-        [HttpPost]
-        public IActionResult Create(string userId, int roomId, string status)
-        {
-            var log = new AccessLog
+            // Ако е избран статус - филтрирай
+            if (!string.IsNullOrEmpty(status))
             {
-                UserId = userId,
-                RoomId = roomId,
-                EntryTime = DateTime.Now,
-                Status = status
-            };
+                logs = logs.Where(a => a.Status == status);
+            }
 
-            _context.AccessLogs.Add(log);
-            _context.SaveChanges();
+            ViewBag.SelectedStatus = status;
 
-            return RedirectToAction("Index");
+            return View(logs.OrderByDescending(a => a.EntryTime).ToList());
         }
     }
 }

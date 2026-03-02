@@ -1,11 +1,10 @@
-using KursovProekt1.Data;
+﻿using KursovProekt1.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KursovProekt1.Controllers
 {
     public class HomeController : Controller
     {
-        // Vruzka s bazata danni
         private readonly ApplicationDbContext _context;
 
         public HomeController(ApplicationDbContext context)
@@ -13,18 +12,13 @@ namespace KursovProekt1.Controllers
             _context = context;
         }
 
-        // Nachalna stranica s statistiki
+        // Начална страница със статистики
         public IActionResult Index()
         {
-            // Broi stai
             ViewBag.TotalRooms = _context.Rooms.Count();
-
-            // Broi potrebiteli
             ViewBag.TotalUsers = _context.Users.Count();
-
-            // Broi logove
             ViewBag.TotalLogs = _context.AccessLogs.Count();
-
+            ViewBag.TotalRequests = _context.AccessRequests.Count();
             return View();
         }
 

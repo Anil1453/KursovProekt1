@@ -1,0 +1,82 @@
+﻿@model IEnumerable<KursovProekt1.Models.AccessRequest>
+@{
+    ViewData["Title"] = "Заявки";
+}
+
+<h1>Заявки за достъп</h1>
+
+@* Съобщения за успех / грешка *@
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">➕ Нова заявка</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Потребител</th>
+            <th>Стая</th>
+            <th>Причина</th>
+            <th>Дата</th>
+            <th>Статус</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Действия</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model)
+        {
+            <tr>
+                <td>@req.User?.Email</td>
+                <td>@req.Room?.RoomName</td>
+                <td>@req.Reason</td>
+                <td>@req.RequestDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>
+                    @if (req.Status == "Approved")
+                    {
+                        <span class="badge bg-success">Одобрена</span>
+                    }
+                    else if (req.Status == "Denied")
+                    {
+                        <span class="badge bg-danger">Отказана</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Изчаква</span>
+                    }
+                </td>
+                @* Само админ вижда бутоните *@
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @if (req.Status == "Pending")
+                        {
+                            <form method="post" asp-action="Approve" asp-route-id="@req.Id" style="display:inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-success btn-sm">Одобри</button>
+                            </form>
+                            <form method="post" asp-action="Deny" asp-route-id="@req.Id" style="display:inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm">Откажи</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span>@req.AdminResponse</span>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

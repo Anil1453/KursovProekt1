@@ -8,7 +8,7 @@
 </div>
 
 <div class="row mt-5">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card text-white bg-primary mb-3">
             <div class="card-body">
                 <h5 class="card-title">Стаи</h5>
@@ -17,22 +17,30 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card text-white bg-success mb-3">
             <div class="card-body">
                 <h5 class="card-title">Потребители</h5>
                 <p class="card-text display-4">@ViewBag.TotalUsers</p>
+                <a href="/User/Index" class="btn btn-light">Преглед</a>
             </div>
         </div>
     </div>
-
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card text-white bg-info mb-3">
             <div class="card-body">
                 <h5 class="card-title">Логове</h5>
                 <p class="card-text display-4">@ViewBag.TotalLogs</p>
                 <a href="/AccessLog/Index" class="btn btn-light">Преглед</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Заявки</h5>
+                <p class="card-text display-4">@ViewBag.TotalRequests</p>
+                <a href="/AccessRequest/Index" class="btn btn-light">Преглед</a>
             </div>
         </div>
     </div>

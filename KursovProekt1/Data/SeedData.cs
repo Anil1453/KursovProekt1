@@ -15,7 +15,7 @@ namespace KursovProekt1.Data
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             // 2 rola: Admin i User
-            string[] roleNames = { "Admin", "User" };
+            string[] roleNames = { "Admin", "Мениджър", "Служител", "Потребител" };
 
             // Za vsqka rolq:
             foreach (var roleName in roleNames)
@@ -55,6 +55,15 @@ namespace KursovProekt1.Data
                 {
                     // Dobavi Admin rolqta
                     await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+            // Всички потребители без роля да получат роля Потребител
+            foreach (var user in userManager.Users.ToList())
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                if (roles.Count == 0)
+                {
+                    await userManager.AddToRoleAsync(user, "Потребител");
                 }
             }
         }
