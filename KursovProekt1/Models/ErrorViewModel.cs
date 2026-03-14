@@ -1,4 +1,4 @@
-namespace KursovProekt1.Models
+namespace ControlPanel.Models
 {
     public class ErrorViewModel
     {

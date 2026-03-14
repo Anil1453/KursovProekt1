@@ -1,7 +1,7 @@
-﻿using KursovProekt1.Models;
+﻿using ControlPanel.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace KursovProekt1.Data
+namespace ControlPanel.Data
 {
     public static class SeedData
     {

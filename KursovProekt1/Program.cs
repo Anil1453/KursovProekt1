@@ -1,5 +1,5 @@
-﻿using KursovProekt1.Data;
-using KursovProekt1.Models;
+﻿using ControlPanel.Data;
+using ControlPanel.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

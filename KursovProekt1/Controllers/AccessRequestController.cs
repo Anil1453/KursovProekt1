@@ -1,11 +1,11 @@
-using KursovProekt1.Data;
-using KursovProekt1.Models;
+using ControlPanel.Data;
+using ControlPanel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace KursovProekt1.Controllers
+namespace ControlPanel.Controllers
 {
     // Само влезли потребители могат да използват тези страници
     [Authorize]

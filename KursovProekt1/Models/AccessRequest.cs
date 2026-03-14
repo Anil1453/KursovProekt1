@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace KursovProekt1.Models
+namespace ControlPanel.Models
 {
     // Заявки на потребители за достъп до стаи
     public class AccessRequest

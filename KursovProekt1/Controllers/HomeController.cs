@@ -1,7 +1,7 @@
-﻿using KursovProekt1.Data;
+﻿using ControlPanel.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KursovProekt1.Controllers
+namespace ControlPanel.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,10 +1,10 @@
-﻿using KursovProekt1.Data;
-using KursovProekt1.Models;
+﻿using ControlPanel.Data;
+using ControlPanel.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization; // Za yetkite
 
-namespace KursovProekt1.Controllers
+namespace ControlPanel.Controllers
 {
     // [Authorize] = Samo vlezli potrebiteli mogat da vlqzat
     // Roles = "Admin" = Samo potrebiteli s Admin rolq

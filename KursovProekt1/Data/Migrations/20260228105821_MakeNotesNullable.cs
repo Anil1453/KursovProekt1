@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace KursovProekt1.Data.Migrations
+namespace ControlPanel.Data.Migrations
 {
     /// <inheritdoc />
     public partial class MakeNotesNullable : Migration

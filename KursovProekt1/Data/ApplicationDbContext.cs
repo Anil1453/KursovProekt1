@@ -1,8 +1,8 @@
-﻿using KursovProekt1.Models;
+﻿using ControlPanel.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace KursovProekt1.Data
+namespace ControlPanel.Data
 {
     // Базата данни - тук дефинираме таблиците
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

@@ -1,9 +1,9 @@
-﻿using KursovProekt1.Models;
+﻿using ControlPanel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KursovProekt1.Controllers
+namespace ControlPanel.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class UserController : Controller

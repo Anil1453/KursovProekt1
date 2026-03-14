@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-KursovProekt1-d5b797c8-11f7-44bc-8910-f6baedbf7523</UserSecretsId>
+    <UserSecretsId>aspnet-ControlPanel-d5b797c8-11f7-44bc-8910-f6baedbf7523</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

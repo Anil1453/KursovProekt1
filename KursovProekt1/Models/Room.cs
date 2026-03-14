@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KursovProekt1.Models
+namespace ControlPanel.Models
 {
     // Клас за стаи/помещения с контролиран достъп
     public class Room

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace KursovProekt1.Models
+namespace ControlPanel.Models
 {
     // Razshirqvame standartnia IdentityUser s dopulnitelna informaciq
     public class ApplicationUser : IdentityUser

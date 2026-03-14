@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace KursovProekt1.Models
+namespace ControlPanel.Models
 {
     // Записи за достъп - кой влезе в коя стая и кога
     public class AccessLog
