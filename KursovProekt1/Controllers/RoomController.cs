@@ -35,16 +35,17 @@ namespace ControlPanel.Controllers
         // GET: Room/Details/5 - pokazva detaili za edna staq
         public IActionResult Details(int id)
         {
-            // Nameri staqta po ID
             var room = _context.Rooms.Find(id);
+            if (room == null) return NotFound();
 
-            // Ako ne sastostva, pokaji greshka
-            if (room == null)
-            {
-                return NotFound();
-            }
+            // Bu zonaya erişimi onaylanan kullanıcılar
+            var usersWithAccess = _context.AccessRequests
+                .Include(r => r.User)
+                .Where(r => r.RoomId == id && r.Status == "Approved")
+                .ToList();
 
-            // Izprati q kum View
+            ViewBag.UsersWithAccess = usersWithAccess;
+
             return View(room);
         }
 

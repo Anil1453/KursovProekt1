@@ -1,67 +1,76 @@
-﻿@model ControlPanel.Models.Room
+@model ControlPanel.Models.Room
 
 @{
-    ViewData["Title"] = "Добави стая";
+    ViewData["Title"] = "Добави зона";
 }
 
-<h1>Добави нова стая</h1>
+<div class="cp-page-header">
+    <div>
+        <div class="cp-page-title">Добави нова зона за сигурност</div>
+        <div class="cp-page-subtitle">Попълнете данните за новата зона с контролиран достъп</div>
+    </div>
+    <a asp-action="Index" class="cp-btn cp-btn-ghost">
+        <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 0 1 1.414 1.414L5.414 9H17a1 1 0 1 1 0 2H5.414l4.293 4.293a1 1 0 0 1 0 1.414z" clip-rule="evenodd"/></svg>
+        Назад
+    </a>
+</div>
 
-<hr />
-
-<!-- Форма за добавяне -->
-<div class="row">
-    <div class="col-md-6">
+<div class="cp-card" style="max-width:560px">
+    <div class="cp-card-header">
+        <span class="cp-card-title">Данни за зоната</span>
+    </div>
+    <div class="cp-card-body">
         <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
 
-            <!-- Име на стаята -->
-            <div class="form-group mb-3">
-                <label asp-for="RoomName" class="form-label">Име на стаята</label>
-                <input asp-for="RoomName" class="form-control" placeholder="Сървърна зала" />
-                <span asp-validation-for="RoomName" class="text-danger"></span>
+            <div class="cp-form-group">
+                <label asp-for="RoomName" class="cp-form-label">Име на зоната <span class="req">*</span></label>
+                <input asp-for="RoomName" class="cp-form-control" placeholder="напр. Сървърна зала" />
+                <span asp-validation-for="RoomName" class="cp-form-error"></span>
             </div>
 
-            <!-- Код на стаята -->
-            <div class="form-group mb-3">
-                <label asp-for="RoomCode" class="form-label">Код на стаята</label>
-                <input asp-for="RoomCode" class="form-control" placeholder="A101" />
-                <span asp-validation-for="RoomCode" class="text-danger"></span>
+            <div class="cp-form-group">
+                <label asp-for="RoomCode" class="cp-form-label">Код на зоната <span class="req">*</span></label>
+                <input asp-for="RoomCode" class="cp-form-control" placeholder="напр. SRV-01" />
+                <div class="cp-form-hint">Уникален код за идентификация (напр. A101, SRV-01)</div>
+                <span asp-validation-for="RoomCode" class="cp-form-error"></span>
             </div>
 
-            <!-- Описание -->
-            <div class="form-group mb-3">
-                <label asp-for="Description" class="form-label">Описание</label>
-                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="cp-form-group">
+                <label asp-for="Description" class="cp-form-label">Описание</label>
+                <textarea asp-for="Description" class="cp-form-control" rows="3" placeholder="Кратко описание на зоната..."></textarea>
+                <span asp-validation-for="Description" class="cp-form-error"></span>
             </div>
 
-            <!-- Ниво на достъп -->
-            <div class="form-group mb-3">
-                <label asp-for="AccessLevel" class="form-label">Ниво на достъп</label>
-                <select asp-for="AccessLevel" class="form-control">
-                    <option value="1">1 - Всички</option>
-                    <option value="2">2 - Служители</option>
-                    <option value="3">3 - Мениджъри</option>
-                    <option value="4">4 - Администратор</option>
+            <div class="cp-form-group">
+                <label asp-for="AccessLevel" class="cp-form-label">Ниво на достъп <span class="req">*</span></label>
+                <select asp-for="AccessLevel" class="cp-form-control">
+                    <option value="1">1 — Всички потребители</option>
+                    <option value="2">2 — Само служители</option>
+                    <option value="3">3 — Само мениджъри</option>
+                    <option value="4">4 — Само администратори</option>
                 </select>
+                <div class="cp-form-hint">По-високото ниво означава по-строги ограничения</div>
             </div>
 
-            <!-- Активна -->
-            <div class="form-check mb-3">
-                <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
-                <label asp-for="IsActive" class="form-check-label">Активна стая</label>
+            <div class="cp-form-group">
+                <div class="cp-checkbox-group">
+                    <input asp-for="IsActive" type="checkbox" id="IsActive" checked />
+                    <label for="IsActive">Зоната е активна</label>
+                </div>
             </div>
 
-            <!-- Бутони -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">💾 Запази</button>
-                <a asp-action="Index" class="btn btn-secondary">❌ Отказ</a>
+            <div class="cp-form-actions">
+                <button type="submit" class="cp-btn cp-btn-primary">
+                    <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 0 1 0 1.414l-8 8a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 1.414-1.414L8 12.586l7.293-7.293a1 1 0 0 1 1.414 0z" clip-rule="evenodd"/></svg>
+                    Запази зоната
+                </button>
+                <a asp-action="Index" class="cp-btn cp-btn-ghost">Отказ</a>
             </div>
         </form>
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -1,86 +1,141 @@
-﻿@{
+@{
     ViewData["Title"] = "Начало";
 }
 
-<style>
-    .hover-card {
-        display: block;
-        text-decoration: none !important;
-        transition: all 0.3s ease-in-out;
-        height: 100%; 
-    }
+<div class="cp-welcome">
+    <div>
+        <div class="cp-welcome-title">Добре дошли в ControlPanel</div>
+        <div class="cp-welcome-sub">Всички системи работят нормално. Преглед на активността.</div>
+    </div>
+    <div class="cp-welcome-chip">@DateTime.Now.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("bg-BG"))</div>
+</div>
 
-        .hover-card:hover .card {
-            transform: translateY(-8px);
-            filter: brightness(1.15);
-            box-shadow: 0 1rem 3rem rgba(0,0,0,.2) !important;
-        }
-</style>
+@if (User.IsInRole("Admin"))
+{
+    <div class="cp-stats">
+        <a href="/Room/Index" class="cp-stat-card">
+            <div class="cp-stat-top"><div class="cp-stat-icon blue"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 0 0-.788 0l-7 3a1 1 0 0 0 0 1.84L5.25 8.051a.999.999 0 0 1 .356-.412L10 5.306l4.394 2.333a.999.999 0 0 1 .356.412l2.644-1.131a1 1 0 0 0 0-1.84l-7-3zM3.31 9.397L5 10.12V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-4.88l1.69-.723a1 1 0 0 0 0-1.84L10 5.694l-6.69 2.863a1 1 0 0 0 0 1.84z"/></svg></div><span class="cp-stat-arrow">→</span></div>
+            <div class="cp-stat-num">@ViewBag.TotalRooms</div>
+            <div class="cp-stat-label">Зони за сигурност</div>
+        </a>
+        <a href="/User/Index" class="cp-stat-card">
+            <div class="cp-stat-top"><div class="cp-stat-icon green"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM17 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 0 0-1.5-4.33A5 5 0 0 1 19 16v1h-6.07zM6 11a5 5 0 0 1 5 5v1H1v-1a5 5 0 0 1 5-5z"/></svg></div><span class="cp-stat-arrow">→</span></div>
+            <div class="cp-stat-num">@ViewBag.TotalUsers</div>
+            <div class="cp-stat-label">Регистрирани потребители</div>
+        </a>
+        <a href="/AccessLog/Index" class="cp-stat-card">
+            <div class="cp-stat-top"><div class="cp-stat-icon gray"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1z" clip-rule="evenodd"/></svg></div><span class="cp-stat-arrow">→</span></div>
+            <div class="cp-stat-num">@ViewBag.TotalLogs</div>
+            <div class="cp-stat-label">Записа в логовете</div>
+        </a>
+        <a href="/AccessRequest/Index" class="cp-stat-card">
+            <div class="cp-stat-top"><div class="cp-stat-icon red"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884z"/><path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118z"/></svg></div><span class="cp-stat-arrow">→</span></div>
+            <div class="cp-stat-num">@ViewBag.TotalRequests</div>
+            <div class="cp-stat-label">Заявки за достъп</div>
+        </a>
+    </div>
+}
+else
+{
+    <div class="cp-stats" style="grid-template-columns:repeat(2,minmax(0,1fr));max-width:600px">
+        <a href="/Room/Index" class="cp-stat-card">
+            <div class="cp-stat-top"><div class="cp-stat-icon blue"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 0 0-.788 0l-7 3a1 1 0 0 0 0 1.84L5.25 8.051a.999.999 0 0 1 .356-.412L10 5.306l4.394 2.333a.999.999 0 0 1 .356.412l2.644-1.131a1 1 0 0 0 0-1.84l-7-3zM3.31 9.397L5 10.12V15a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-4.88l1.69-.723a1 1 0 0 0 0-1.84L10 5.694l-6.69 2.863a1 1 0 0 0 0 1.84z"/></svg></div><span class="cp-stat-arrow">→</span></div>
+            <div class="cp-stat-num">@ViewBag.TotalRooms</div>
+            <div class="cp-stat-label">Зони за сигурност</div>
+        </a>
+        <a href="/AccessRequest/Index" class="cp-stat-card">
+            <div class="cp-stat-top"><div class="cp-stat-icon red"><svg fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884z"/><path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118z"/></svg></div><span class="cp-stat-arrow">→</span></div>
+            <div class="cp-stat-num">@ViewBag.TotalRequests</div>
+            <div class="cp-stat-label">Моите заявки</div>
+        </a>
+    </div>
+}
 
-<div class="card border-0 shadow-sm rounded-4 mb-5 overflow-hidden bg-dark text-white">
-    <div class="card-body p-4 p-md-5 position-relative">
-        <div class="row align-items-center">
+<div class="cp-grid-2">
+    <div class="cp-card">
+        <div class="cp-card-header">
+            <span class="cp-card-title">Последни логове</span>
+            @if (User.IsInRole("Admin")) { <a href="/AccessLog/Index" class="cp-btn cp-btn-ghost" style="padding:5px 10px;font-size:12px">Виж всички →</a> }
+        </div>
+        <div class="cp-card-body">
+            @if (ViewBag.RecentLogs != null)
+            {
+                foreach (var log in ViewBag.RecentLogs)
+                {
+                    <div class="cp-mini-row">
+                        <div class="cp-mini-dot @(log.Status == "Approved" ? "green" : log.Status == "Denied" ? "red" : "amber")"></div>
+                        <div class="cp-mini-text">@(log.User?.Email ?? "—") → @(log.Room?.RoomName ?? "—")</div>
+                        <div class="cp-mini-time">@log.EntryTime.ToString("HH:mm")</div>
+                    </div>
+                }
+            }
+            else { <div class="cp-empty" style="padding:24px"><div class="cp-empty-sub">Все още няма логове.</div></div> }
+        </div>
+    </div>
 
-            <div class="col-md-8">
-                <h2 class="fw-bold mb-2">👋 Добре дошли отново!</h2>
-                <p class="text-white-50 fs-5 mb-0">Всички системи работят нормално. Ето какво се случва в панела днес.</p>
-            </div>
-
-            <div class="col-md-4 text-md-end mt-4 mt-md-0">
-                <div class="bg-white bg-opacity-10 rounded-3 p-3 d-inline-block text-center border border-light border-opacity-25 shadow-sm">
-                    <span class="d-block fs-6 text-white-50 text-uppercase mb-1">📅 Днешна Дата</span>
-                    <span class="d-block fs-4 fw-bold text-light">@DateTime.Now.ToString("dd.MM.yyyy")</span>
-                </div>
-            </div>
-
+    <div class="cp-card">
+        <div class="cp-card-header">
+            <span class="cp-card-title">Зони за сигурност</span>
+            @if (User.IsInRole("Admin")) { <a href="/Room/Index" class="cp-btn cp-btn-ghost" style="padding:5px 10px;font-size:12px">Управлявай →</a> }
+        </div>
+        <div class="cp-card-body">
+            @if (ViewBag.RecentRooms != null)
+            {
+                foreach (var room in ViewBag.RecentRooms)
+                {
+                    <div class="cp-mini-row">
+                        <div style="flex:1">
+                            <div style="font-size:14px;font-weight:500">@room.RoomName</div>
+                            <div style="font-size:12px;color:var(--hint)">@room.RoomCode</div>
+                        </div>
+                        <span class="cp-level cp-level-@room.AccessLevel">Ниво @room.AccessLevel</span>
+                    </div>
+                }
+            }
+            else { <div class="cp-empty" style="padding:24px"><div class="cp-empty-sub">Все още няма зони.</div></div> }
         </div>
     </div>
 </div>
 
-<div class="row g-4">
+@if (User.IsInRole("Admin") && (int)ViewBag.TotalLogs > 0)
+{
+    int approved = (int)ViewBag.ApprovedLogs;
+    int denied   = (int)ViewBag.DeniedLogs;
+    int pending  = (int)ViewBag.PendingLogs;
+    int total    = approved + denied + pending;
 
-    <div class="col-12 col-sm-6 col-xl-3">
-        <a href="/Room/Index" class="hover-card">
-            <div class="card text-white bg-primary bg-gradient shadow rounded-4 border-0 h-100">
-                <div class="card-body p-4 text-center d-flex flex-column justify-content-center">
-                    <h6 class="card-title text-uppercase fw-light mb-2">🚪 Общо Стаи</h6>
-                    <h1 class="display-3 fw-bold mb-0">@ViewBag.TotalRooms</h1>
+    <div class="cp-card" style="max-width:480px;margin-top:4px">
+        <div class="cp-card-header">
+            <span class="cp-card-title">Статистика на достъпа</span>
+            <span style="font-size:12px;color:var(--muted)">Общо @total записа</span>
+        </div>
+        <div class="cp-card-body" style="display:flex;align-items:center;gap:32px">
+            <canvas id="accessChart" width="160" height="160" style="flex-shrink:0"></canvas>
+            <div style="flex:1">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                    <div style="width:12px;height:12px;border-radius:3px;background:#16a34a;flex-shrink:0"></div>
+                    <div style="flex:1;font-size:14px">Одобрен</div>
+                    <div style="font-size:18px;font-weight:700;color:#16a34a">@approved</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                    <div style="width:12px;height:12px;border-radius:3px;background:#dc2626;flex-shrink:0"></div>
+                    <div style="flex:1;font-size:14px">Отказан</div>
+                    <div style="font-size:18px;font-weight:700;color:#dc2626">@denied</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:12px;height:12px;border-radius:3px;background:#d97706;flex-shrink:0"></div>
+                    <div style="flex:1;font-size:14px">В изчакване</div>
+                    <div style="font-size:18px;font-weight:700;color:#d97706">@pending</div>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
-
-    <div class="col-12 col-sm-6 col-xl-3">
-        <a href="/User/Index" class="hover-card">
-            <div class="card text-white bg-success bg-gradient shadow rounded-4 border-0 h-100">
-                <div class="card-body p-4 text-center d-flex flex-column justify-content-center">
-                    <h6 class="card-title text-uppercase fw-light mb-2">👥 Потребители</h6>
-                    <h1 class="display-3 fw-bold mb-0">@ViewBag.TotalUsers</h1>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <div class="col-12 col-sm-6 col-xl-3">
-        <a href="/AccessLog/Index" class="hover-card">
-            <div class="card text-white bg-secondary bg-gradient shadow rounded-4 border-0 h-100">
-                <div class="card-body p-4 text-center d-flex flex-column justify-content-center">
-                    <h6 class="card-title text-uppercase fw-light mb-2">📋 Последни Логове</h6>
-                    <h1 class="display-3 fw-bold mb-0">@ViewBag.TotalLogs</h1>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <div class="col-12 col-sm-6 col-xl-3">
-        <a href="/AccessRequest/Index" class="hover-card">
-            <div class="card text-white bg-danger bg-gradient shadow rounded-4 border-0 h-100">
-                <div class="card-body p-4 text-center d-flex flex-column justify-content-center">
-                    <h6 class="card-title text-uppercase fw-light mb-2">📨 Нови Заявки</h6>
-                    <h1 class="display-3 fw-bold mb-0">@ViewBag.TotalRequests</h1>
-                </div>
-            </div>
-        </a>
-    </div>
-
-</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script>
+        new Chart(document.getElementById('accessChart'), {
+            type: 'doughnut',
+            data: { datasets: [{ data: [@approved, @denied, @pending], backgroundColor: ['#16a34a','#dc2626','#d97706'], borderWidth: 0, hoverOffset: 6 }] },
+            options: { cutout: '68%', plugins: { legend: { display: false } }, animation: { duration: 800 } }
+        });
+    </script>
+}

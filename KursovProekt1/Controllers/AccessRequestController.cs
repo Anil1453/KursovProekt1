@@ -123,6 +123,10 @@ namespace ControlPanel.Controllers
             request.ApprovedByAdminId = _userManager.GetUserId(User);
             request.ApprovalDate = DateTime.Now;
 
+            // Log kaydı oluştur
+            var log = new AccessLog { UserId = request.UserId, RoomId = request.RoomId, EntryTime = DateTime.Now, Status = "Denied" };
+            _context.AccessLogs.Add(log);
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }

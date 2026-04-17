@@ -1,53 +1,123 @@
-﻿@model IEnumerable<ControlPanel.Models.AccessLog>
+@model IEnumerable<ControlPanel.Models.AccessLog>
+
 @{
     ViewData["Title"] = "Логове";
 }
 
-<h1>Логове за достъп</h1>
-
-@* Филтър по статус *@
-<form method="get" class="mb-3">
-    <div class="row">
-        <div class="col-md-3">
-            <select name="status" class="form-control">
-                <option value="">-- Всички --</option>
-                <option value="Approved" selected="@(ViewBag.SelectedStatus == "Approved")">Одобрен</option>
-                <option value="Denied" selected="@(ViewBag.SelectedStatus == "Denied")">Отказан</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary">Филтрирай</button>
-        </div>
+<div class="cp-page-header">
+    <div>
+        <div class="cp-page-title">Логове за достъп</div>
+        <div class="cp-page-subtitle">История на всички влизания и откази</div>
     </div>
-</form>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Потребител</th>
-            <th>Стая</th>
-            <th>Време</th>
-            <th>Статус</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var log in Model)
+<div class="cp-filter-bar">
+    <form method="get" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <select name="status" onchange="this.form.submit()">
+            <option value="">Всички статуси</option>
+            @if (ViewBag.SelectedStatus == "Approved")
+            {
+                <option value="Approved" selected="selected">Одобрен</option>
+                <option value="Denied">Отказан</option>
+            }
+            else if (ViewBag.SelectedStatus == "Denied")
+            {
+                <option value="Approved">Одобрен</option>
+                <option value="Denied" selected="selected">Отказан</option>
+            }
+            else
+            {
+                <option value="Approved">Одобрен</option>
+                <option value="Denied">Отказан</option>
+            }
+        </select>
+        @if (!string.IsNullOrEmpty(ViewBag.SelectedStatus as string))
         {
-            <tr>
-                <td>@log.User?.Email</td>
-                <td>@log.Room?.RoomName</td>
-                <td>@log.EntryTime.ToString("dd.MM.yyyy HH:mm")</td>
-                <td>
-                    @if (log.Status == "Approved")
+            <a href="/AccessLog/Index" class="cp-btn cp-btn-ghost" style="height:34px;padding:0 10px;font-size:12px">Изчисти филтъра ×</a>
+        }
+    </form>
+    <span style="font-size:12px;color:var(--text-muted);margin-left:auto">
+        @Model.Count() записа
+    </span>
+</div>
+
+<div class="cp-card">
+    <div class="cp-card-body-flush">
+        @if (Model.Any())
+        {
+            <table class="cp-table">
+                <thead>
+                    <tr>
+                        <th>Потребител</th>
+                        <th>Стая</th>
+                        <th>Влизане</th>
+                        <th>Излизане</th>
+                        <th>Статус</th>
+                        <th>Бележки</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var log in Model)
                     {
-                        <span class="badge bg-success">Одобрен</span>
+                        <tr>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:8px">
+                                    <div class="cp-avatar">@(log.User?.Email?.Substring(0, 2).ToUpper() ?? "??")</div>
+                                    <span style="font-size:13px;font-weight:500">@(log.User?.Email ?? "—")</span>
+                                </div>
+                            </td>
+                            <td style="font-weight:500">@(log.Room?.RoomName ?? "—")</td>
+                            <td style="color:var(--text-secondary);font-size:12px">@log.EntryTime.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td style="color:var(--text-secondary);font-size:12px">
+                                @if (log.ExitTime.HasValue)
+                                {
+                                    @log.ExitTime.Value.ToString("dd.MM.yyyy HH:mm")
+                                }
+                                else
+                                {
+                                    <span style="color:var(--text-muted)">—</span>
+                                }
+                            </td>
+                            <td>
+                                @if (log.Status == "Approved")
+                                {
+                                    <span class="cp-badge cp-badge-green"><span class="dot"></span> Одобрен</span>
+                                }
+                                else if (log.Status == "Denied")
+                                {
+                                    <span class="cp-badge cp-badge-red"><span class="dot"></span> Отказан</span>
+                                }
+                                else
+                                {
+                                    <span class="cp-badge cp-badge-amber"><span class="dot"></span> В изчакване</span>
+                                }
+                            </td>
+                            <td style="color:var(--text-secondary);font-size:12px">
+                                @(string.IsNullOrEmpty(log.Notes) ? "—" : log.Notes)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="cp-empty">
+                <div class="cp-empty-icon">
+                    <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1z" clip-rule="evenodd"/></svg>
+                </div>
+                <div class="cp-empty-title">Няма намерени логове</div>
+                <div class="cp-empty-sub">
+                    @if (string.IsNullOrEmpty(ViewBag.SelectedStatus as string))
+                    {
+                        <text>Все още няма записани влизания.</text>
                     }
                     else
                     {
-                        <span class="badge bg-danger">Отказан</span>
+                        <text>Няма логове с избрания статус.</text>
                     }
-                </td>
-            </tr>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
