@@ -73,6 +73,11 @@ namespace ControlPanel.Controllers
             _context.AccessRequests.Add(novaZayavka);
             await _context.SaveChangesAsync();
 
+            // Pending log oluştur
+            var log = new AccessLog { UserId = userId, RoomId = roomId, EntryTime = DateTime.Now, Status = "Pending" };
+            _context.AccessLogs.Add(log);
+            await _context.SaveChangesAsync();
+
             TempData["Success"] = "Заявката е изпратена!";
             return RedirectToAction("Index");
         }

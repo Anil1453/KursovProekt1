@@ -84,6 +84,18 @@
             </span>
             <span class="cp-nav-label">Роли и права</span>
         </a>
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="cp-nav-section-label" style="margin-top:12px">Акаунт</div>
+            <a asp-controller="Profile" asp-action="Index"
+               class="cp-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Profile" ? "active" : "")">
+                <span class="cp-nav-icon">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-7 9a7 7 0 1 1 14 0H3z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="cp-nav-label">Моят профил</span>
+            </a>
+        }
     </nav>
 
     <div class="cp-sidebar-footer">
@@ -96,8 +108,16 @@
         {
             var currentUser = await UserManager.GetUserAsync(User);
             var initials = currentUser?.Email?.Substring(0, 2).ToUpper() ?? "??";
+            var hasPhoto = !string.IsNullOrEmpty(currentUser?.ProfilePicture);
             <div class="cp-user-pill">
-                <div class="cp-user-avatar">@initials</div>
+                @if (hasPhoto)
+                {
+                    <img src="/uploads/@currentUser.ProfilePicture" style="width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0" />
+                }
+                else
+                {
+                    <div class="cp-user-avatar">@initials</div>
+                }
                 <div class="cp-user-info">
                     <span class="cp-user-name">@(currentUser?.FullName ?? currentUser?.Email)</span>
                     <span class="cp-user-role">
@@ -107,6 +127,9 @@
                         else { <text>Потребител</text> }
                     </span>
                 </div>
+                <a href="/Profile" class="cp-logout-btn" title="Профил" style="color:#94a3b8;text-decoration:none">
+                    <svg viewBox="0 0 20 20" fill="currentColor" style="width:16px;height:16px"><path fill-rule="evenodd" d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-7 9a7 7 0 1 1 14 0H3z" clip-rule="evenodd"/></svg>
+                </a>
                 <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
                     <button type="submit" class="cp-logout-btn" title="Изход">
                         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3zm11 4.414-1.414-1.414L9 9.586 6.414 7 5 8.414 9 12.414 14 7.414z" clip-rule="evenodd"/></svg>
@@ -143,7 +166,7 @@
         </div>
     </header>
 
-    <main class="cp-content">
+    <main class="cp-content" style="flex:1">
         @if (TempData["Success"] != null)
         {
             <div class="cp-alert cp-alert-success">

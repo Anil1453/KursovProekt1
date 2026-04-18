@@ -99,43 +99,4 @@ else
 
 @if (User.IsInRole("Admin") && (int)ViewBag.TotalLogs > 0)
 {
-    int approved = (int)ViewBag.ApprovedLogs;
-    int denied   = (int)ViewBag.DeniedLogs;
-    int pending  = (int)ViewBag.PendingLogs;
-    int total    = approved + denied + pending;
-
-    <div class="cp-card" style="max-width:480px;margin-top:4px">
-        <div class="cp-card-header">
-            <span class="cp-card-title">Статистика на достъпа</span>
-            <span style="font-size:12px;color:var(--muted)">Общо @total записа</span>
-        </div>
-        <div class="cp-card-body" style="display:flex;align-items:center;gap:32px">
-            <canvas id="accessChart" width="160" height="160" style="flex-shrink:0"></canvas>
-            <div style="flex:1">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-                    <div style="width:12px;height:12px;border-radius:3px;background:#16a34a;flex-shrink:0"></div>
-                    <div style="flex:1;font-size:14px">Одобрен</div>
-                    <div style="font-size:18px;font-weight:700;color:#16a34a">@approved</div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-                    <div style="width:12px;height:12px;border-radius:3px;background:#dc2626;flex-shrink:0"></div>
-                    <div style="flex:1;font-size:14px">Отказан</div>
-                    <div style="font-size:18px;font-weight:700;color:#dc2626">@denied</div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px">
-                    <div style="width:12px;height:12px;border-radius:3px;background:#d97706;flex-shrink:0"></div>
-                    <div style="flex:1;font-size:14px">В изчакване</div>
-                    <div style="font-size:18px;font-weight:700;color:#d97706">@pending</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-    <script>
-        new Chart(document.getElementById('accessChart'), {
-            type: 'doughnut',
-            data: { datasets: [{ data: [@approved, @denied, @pending], backgroundColor: ['#16a34a','#dc2626','#d97706'], borderWidth: 0, hoverOffset: 6 }] },
-            options: { cutout: '68%', plugins: { legend: { display: false } }, animation: { duration: 800 } }
-        });
-    </script>
 }
