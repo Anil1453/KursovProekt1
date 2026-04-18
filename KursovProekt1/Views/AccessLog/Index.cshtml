@@ -21,31 +21,30 @@
     double deniedPct   = Math.Round((double)denied   / total * 100);
     double pendingPct  = Math.Round((double)pending  / total * 100);
 
-    <div class="cp-card" style="max-width:560px;margin-bottom:20px">
+    <div class="cp-card" style="max-width:420px;margin-bottom:20px">
         <div class="cp-card-header">
             <span class="cp-card-title">Разпределение на достъпа</span>
             <span style="font-size:12px;color:var(--muted)">@total записа</span>
         </div>
-        <div class="cp-card-body" style="display:flex;align-items:center;gap:28px">
-            <canvas id="logChart" width="120" height="120" style="flex-shrink:0"></canvas>
-            <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+        <div class="cp-card-body" style="display:flex;align-items:center;gap:24px">
+            <div style="width:110px;height:110px;flex-shrink:0">
+                <canvas id="logChart"></canvas>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:8px">
                 <div style="display:flex;align-items:center;gap:8px">
                     <div style="width:10px;height:10px;border-radius:2px;background:#16a34a;flex-shrink:0"></div>
-                    <div style="flex:1;font-size:13px">Одобрен</div>
-                    <div style="font-weight:700;color:#16a34a;font-size:15px;min-width:28px;text-align:right">@approved</div>
-                    <div style="font-size:12px;color:var(--muted);min-width:36px;text-align:right">@approvedPct%</div>
+                    <div style="font-size:13px;flex:1">Одобрени</div>
+                    <div style="font-weight:700;color:#16a34a;font-size:14px">@approved</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
                     <div style="width:10px;height:10px;border-radius:2px;background:#dc2626;flex-shrink:0"></div>
-                    <div style="flex:1;font-size:13px">Отказан</div>
-                    <div style="font-weight:700;color:#dc2626;font-size:15px;min-width:28px;text-align:right">@denied</div>
-                    <div style="font-size:12px;color:var(--muted);min-width:36px;text-align:right">@deniedPct%</div>
+                    <div style="font-size:13px;flex:1">Отказани</div>
+                    <div style="font-weight:700;color:#dc2626;font-size:14px">@denied</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
                     <div style="width:10px;height:10px;border-radius:2px;background:#d97706;flex-shrink:0"></div>
-                    <div style="flex:1;font-size:13px">В изчакване</div>
-                    <div style="font-weight:700;color:#d97706;font-size:15px;min-width:28px;text-align:right">@pending</div>
-                    <div style="font-size:12px;color:var(--muted);min-width:36px;text-align:right">@pendingPct%</div>
+                    <div style="font-size:13px;flex:1">В изчакване</div>
+                    <div style="font-weight:700;color:#d97706;font-size:14px">@pending</div>
                 </div>
             </div>
         </div>
@@ -53,18 +52,24 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <script>
-        new Chart(document.getElementById('logChart'), {
+        var ctx = document.getElementById('logChart');
+        ctx.width = 110; ctx.height = 110;
+        new Chart(ctx, {
             type: 'pie',
             data: {
                 datasets: [{
                     data: [@approved, @denied, @pending],
                     backgroundColor: ['#16a34a', '#dc2626', '#d97706'],
-                    borderWidth: 3,
+                    borderWidth: 2,
                     borderColor: '#ffffff',
-                    hoverOffset: 6
+                    hoverOffset: 4
                 }]
             },
-            options: { plugins: { legend: { display: false } }, animation: { duration: 800 } }
+            options: {
+                responsive: false,
+                plugins: { legend: { display: false } },
+                animation: { duration: 800 }
+            }
         });
     </script>
 }
